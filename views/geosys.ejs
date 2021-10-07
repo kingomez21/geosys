@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GeoSyS</title>
+    <link rel="stylesheet" href="/css/geosys.css">
+    <%- include('./base/header') %>
+</head>
+
+<body>
+    <nav class="nav navbar-dark bg-dark">
+        <a style="color: white;" class="nav-link active" href="#">
+            <%= nombre %>
+        </a>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+            <i class="fas fa-user-plus"></i>
+          </button>
+        
+        <a style="float:right; color: white;" class="nav-link disabled" href="#"><i class="fas fa-sign-out-alt"></i></a>
+    </nav>
+
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Ingresar un repartidor</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="formRepartidor">
+                  <label for="">Ingresar Identificacion</label>
+                  <br>
+                  <input class="form-control" type="number" id="iden">
+                  <br>
+                  <label for="">Ingresar Nombre</label>
+                  <br>
+                  <input class="form-control" type="text" id="nom">
+                  <br>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary" id="ingR">Ingresar Repartidor</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+    <div id="accordion">
+        <div class="card">
+            <div class="card-header" id="headingOne" style="text-align: center;">
+                <h5 class="mb-0">
+                    <button style="text-decoration: none;" class="btn btn-link" data-toggle="collapse"
+                        data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        HACER DOMICILIO
+                    </button>
+                </h5>
+            </div>
+
+            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+                <div class="card-body">
+                    <div class="contenedor">
+                        <div class="formUsuario">
+                            <h3>INFORMACION DEL CLIENTE</h3>
+                            <br>
+                            <div class="iden">
+                                <label for="">IDENTIFICACION </label>
+                                <input class="form-control" type="number" style="height: 40px;" id="identificacion">
+                            </div>
+                            <br>
+                            <div class="nom">
+                                <label for="">NOMBRE </label>
+                                <input class="form-control" type="text" id="nombre">
+                            </div>
+                            <br>
+                            <div class="tel">
+                                <label for="">TELEFONO </label>
+                                <input class="form-control" type="number" id="telefono">
+                            </div>
+                        </div>
+                        <div class="formNegocio">
+                            <h3>INFORMACION DEL DOMICILIO</h3>
+                            <br>
+                            <label for="">REPARTIDOR: </label>
+                            <select id="repartidor" class="form-select" aria-label="Default select example">
+                                <option selected>Selecciones una opcion</option>
+                                <% for (let d = 0; d < DBrepartidores.length; d++) { %> 
+                                <option value="<%= DBrepartidores[d].identificacion  %>">
+                                    <%= DBrepartidores[d].identificacion%> - <%= DBrepartidores[d].nombre%>
+                                </option>
+                                <% } %> 
+                            </select>
+                            <br>
+                            <label for="">BARRIO</label>
+                            <input class="form-control" type="text" name="" id="barrio">
+                            <br>
+                            <label for="">TIPO DE TRANSPORTE: </label>
+                            <select id="transporte" class="form-select" aria-label="Default select example">
+                                <option selected>Selecciones una opcion</option>
+                                <option value="carro">Carro</option>
+                                <option value="moto">Moto</option>
+                            </select>
+                            <br>
+                            <label for="">DIRECCION</label>
+                            <input class="form-control" type="text" name="" id="direccion">
+                        </div>
+                    </div>
+                    <br><br>
+                    <div class="btns">
+                        <button class="b" id="limpiar">
+                            Limpiar
+                        </button>
+                        <button class="m" id="crearDomi">
+                            Hacer domicilio
+                            
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="Informacion" >
+        <div id="informacion" class="tabcontent">
+            <table class="table">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">id Cliente</th>
+                        <th scope="col">Nombre Cliente</th>
+                        <th scope="col">Telefono</th>
+                        <th scope="col">id Repartidor</th>
+                        <th scope="col">Barrio</th>
+                        <th scope="col">Vehiculo</th>
+                        <th scope="col">Direccion</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% for (let index = 0; index < DBdomicilios.length; index++) {%> 
+                    <tr>
+                        <th scope="row"><%= index %> </th>
+                        <td><%= DBdomicilios[index].idCliente %></td>
+                        <td><%= DBdomicilios[index].nombreCliente %></td>
+                        <td><%= DBdomicilios[index].telefono %></td>
+                        <td><%= DBdomicilios[index].idRepartidor %></td>
+                        <td><%= DBdomicilios[index].barrio %></td>
+                        <td><%= DBdomicilios[index].vehiculo %></td>
+                        <td><%= DBdomicilios[index].direccion %></td>
+                    </tr>
+                    <% } %> 
+                </tbody>
+            </table>
+        </div>
+
+        <div id="analisis" class="tabcontent">
+            <div class="tipoGrafica">
+                <label for="">TIPO DE GRAFICO:  </label>
+                <select name="" id="tipoGrafico" style="height: 40px;">
+                    <option selected >Selecion de graficos</option>
+                    <option value="line">GRAFICO LINEAL</option>
+                    <option value="radar">GRAFICO DE RADAR</option>
+                    <option value="doughnut"> GRAFICO DE ROSQUILLA </option>
+                    <option value="polarArea">GRAFICO ZONA POLAR</option>
+                </select>
+                <button  class="btn btn-primary" id="pintarGrafico">
+                    MOSTRAR GRAFICA
+                </button>
+                <button class="btn btn-danger" id="limpiarG">
+                    LIMPIAR GRAFICA
+                </button>
+            </div>
+            <br><br>
+            <div class="analisisInfo">
+                <div class="g">
+                    <canvas id="graficas"></canvas>
+                </div>
+            </div>
+
+        </div>
+        <div class="tab">
+            <button class="tablinks" onclick="openCity(event, 'informacion')">Informacion</button>
+            <button class="tablinks" onclick="openCity(event, 'analisis')">Analisis</button>
+        </div>
+    </div>
+    <script src="/js/geosysjs.js"></script>
+</body>
+
+</html>
